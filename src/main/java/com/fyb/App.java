@@ -20,8 +20,6 @@ public class App
 
         /*dfasdas*/
 
-
-        System.out.println( "Hello Worldssssssss!" );
         System.out.println( "Hello Worldssssssss!" );
         System.out.println( "Hello!" );
         System.out.println( "Hello Worldssssssss!" );
