@@ -24,7 +24,9 @@ package com.fyb.protocol.request;
 
 import com.fyb.protocol.Packet;
 import com.fyb.protocol.command.Command;
+import lombok.Data;
 
+@Data
 public class MessageRequestPacket extends Packet {
 
     private String message;

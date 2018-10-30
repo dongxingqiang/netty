@@ -31,6 +31,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+import java.util.Date;
+
 public class NettyServer {
 
     private static final int PORT = 8000;
@@ -47,22 +49,19 @@ public class NettyServer {
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
-
-
+                        ch.pipeline().addLast(new ServerHandler());
                     }
                 });
     }
 
     public static void bind(final ServerBootstrap serverBootstrap,final int port) {
-
         serverBootstrap.bind(port).addListener(new ChannelFutureListener() {
             @Override
             public void operationComplete(ChannelFuture future) throws Exception {
-
                 if (future.isSuccess()){
-
+                    System.out.println(new Date() + ": 端口[" + port + "]绑定成功!");
                 }else {
-
+                    System.err.println("端口[" + port + "]绑定失败!");
                 }
             }
         });

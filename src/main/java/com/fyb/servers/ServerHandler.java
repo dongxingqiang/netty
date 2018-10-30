@@ -27,6 +27,7 @@ import com.fyb.protocol.PacketCodeC;
 import com.fyb.protocol.reponse.LoginResponsePacket;
 import com.fyb.protocol.reponse.MessageResponsePacket;
 import com.fyb.protocol.request.LoginRequestPacket;
+import com.fyb.protocol.request.MessageRequestPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -57,20 +58,18 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             //登陆响应
             ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(),loginResponsePacke);
             ctx.channel().writeAndFlush(byteBuf);
-
         }else if (packet instanceof MessageResponsePacket){
-
+            //客户端发来小心
+            MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
+            MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
+            System.out.println(new Date() +": 客户端发来消息： "+ messageRequestPacket.getMessage());
+            messageResponsePacket.setMessage("服务端回复{"+ messageRequestPacket.getMessage()+"}");
+            ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(),messageResponsePacket);
+            ctx.channel().writeAndFlush(byteBuf);
         }
-
-
-
-        super.channelRead(ctx, msg);
     }
 
-
-
     private boolean valid(LoginRequestPacket loginRequestPacket){
-
         return true;
     }
 
