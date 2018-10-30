@@ -41,7 +41,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf requestByteBufer = (ByteBuf) msg;
         Packet packet = PacketCodeC.INSTANCE.decode(requestByteBufer);
 
-        if (packet instanceof LoginResponsePacket){
+        if (packet instanceof LoginRequestPacket){
             System.out.println(new Date()+": 收到客户端登陆请求。。。。");
             LoginRequestPacket loginRequestPacket = (LoginRequestPacket) packet;
 
@@ -58,7 +58,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             //登陆响应
             ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(),loginResponsePacke);
             ctx.channel().writeAndFlush(byteBuf);
-        }else if (packet instanceof MessageResponsePacket){
+        }else if (packet instanceof MessageRequestPacket){
             //客户端发来小心
             MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
             MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
@@ -66,8 +66,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             messageResponsePacket.setMessage("服务端回复{"+ messageRequestPacket.getMessage()+"}");
             ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(),messageResponsePacket);
             ctx.channel().writeAndFlush(byteBuf);
+        }else {
+            System.out.println("gg");
         }
+
     }
+
 
     private boolean valid(LoginRequestPacket loginRequestPacket){
         return true;
