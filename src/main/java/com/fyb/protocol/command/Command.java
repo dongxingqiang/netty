@@ -23,12 +23,11 @@ package com.fyb.protocol.command;
 
 public interface Command {
 
-    public static final Byte LOGIN_REQUEST = 1;
+    Byte LOGIN_REQUEST = 1;
 
     Byte LOGIN_RESPONSE = 2;
 
     Byte MESSAGE_REQUEST = 3;
 
     Byte MESSAGE_RESPONSE = 4;
-    int a = 10;
 }

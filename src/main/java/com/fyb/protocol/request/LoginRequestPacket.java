@@ -30,8 +30,8 @@ import lombok.Data;
 @Data
 public class LoginRequestPacket extends Packet{
 
-    private String userId;
-    private String username;
+    private String userName;
+
     private String password;
 
     @Override
